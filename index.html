@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Exploradores del Sistema Solar!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #0B0B1A; /* Espacio profundo */
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Estrellas animadas para el fondo */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 5s infinite linear;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+            100% { opacity: 0.8; }
+        }
+
+        .planet-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .planet-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 10px 10px -5px rgba(255, 255, 255, 0.04);
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hidden-fact {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Fondo de estrellas -->
+    <div class="stars"></div>
+
+    <!-- Navegación -->
+    <nav class="bg-indigo-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-indigo-500/30">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-3xl">🚀</span>
+                <h1 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-400">
+                    AstroNiños
+                </h1>
+            </div>
+            <a href="#juego" class="bg-yellow-400 hover:bg-yellow-300 text-indigo-900 font-bold py-2 px-6 rounded-full transition-colors shadow-lg shadow-yellow-400/20">
+                ¡Jugar Trivia!
+            </a>
+        </div>
+    </nav>
+
+    <!-- Sección Hero -->
+    <header class="text-center py-20 px-4 relative">
+        <div class="float-animation inline-block mb-6">
+            <span class="text-8xl block filter drop-shadow-[0_0_30px_rgba(255,255,255,0.5)]">👨‍🚀</span>
+        </div>
+        <h2 class="text-5xl md:text-7xl font-black mb-6 text-white drop-shadow-lg">
+            ¡Viajemos por el <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">Sistema Solar!</span>
+        </h2>
+        <p class="text-xl md:text-2xl text-blue-200 max-w-2xl mx-auto mb-10">
+            Ponte tu casco espacial y acompáñanos a descubrir los increíbles planetas que giran alrededor de nuestro Sol.
+        </p>
+        <a href="#planetas" class="animate-bounce inline-block bg-gradient-to-r from-purple-500 to-indigo-600 p-4 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.5)]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </a>
+    </header>
+
+    <!-- Sección de Planetas -->
+    <main id="planetas" class="flex-grow max-w-7xl mx-auto px-4 py-16">
+        
+        <!-- El Sol (Destacado) -->
+        <div class="bg-gradient-to-br from-yellow-500 to-orange-600 rounded-3xl p-8 md:p-12 mb-16 flex flex-col md:flex-row items-center gap-8 shadow-[0_0_50px_rgba(234,179,8,0.3)] planet-card border-4 border-yellow-300">
+            <div class="text-9xl float-animation">☀️</div>
+            <div>
+                <h3 class="text-5xl font-black mb-4 text-white">El Sol</h3>
+                <p class="text-xl text-yellow-50 mb-4 font-bold">¡El jefe del Sistema Solar!</p>
+                <p class="text-lg text-white mb-6">No es un planeta, ¡es una estrella enorme! Es una bola gigante de gas muy, muy caliente que nos da luz y calor para que las plantas, los animales y nosotros podamos vivir en la Tierra.</p>
+                <button onclick="toggleFact('fact-sol')" class="bg-white text-orange-600 font-bold py-3 px-6 rounded-full hover:bg-yellow-100 transition shadow-lg">
+                    ✨ Ver Dato Curioso ✨
+                </button>
+                <div id="fact-sol" class="hidden-fact mt-4 bg-orange-800/50 p-4 rounded-xl text-yellow-100 border-l-4 border-yellow-300">
+                    <strong>¡Wow!</strong> El Sol es tan grande que podrías meter más de un millón de Tierras dentro de él.
+                </div>
+            </div>
+        </div>
+
+        <!-- Cuadrícula de Planetas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Mercurio -->
+            <div class="bg-slate-800 rounded-3xl p-6 border-2 border-slate-600 planet-card">
+                <div class="text-7xl text-center mb-4">🪨</div>
+                <h3 class="text-3xl font-black text-center text-gray-300 mb-2">Mercurio</h3>
+                <p class="text-slate-300 mb-4 text-center">Es el planeta más pequeño y el que está más cerquita del Sol. ¡Es súper rápido!</p>
+                <button onclick="toggleFact('fact-mercurio')" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 rounded-xl transition">Dato Curioso 🔍</button>
+                <div id="fact-mercurio" class="hidden-fact mt-3 text-sm bg-slate-900 p-3 rounded-lg text-gray-300">
+                    De día hace muchísimo calor, pero de noche... ¡hace más frío que en tu congelador!
+                </div>
+            </div>
+
+            <!-- Venus -->
+            <div class="bg-orange-900/50 rounded-3xl p-6 border-2 border-orange-500/50 planet-card">
+                <div class="text-7xl text-center mb-4">🌋</div>
+                <h3 class="text-3xl font-black text-center text-orange-300 mb-2">Venus</h3>
+                <p class="text-orange-100 mb-4 text-center">Es el planeta más caluroso de todos y brilla muchísimo en el cielo nocturno.</p>
+                <button onclick="toggleFact('fact-venus')" class="w-full bg-orange-700 hover:bg-orange-600 text-white font-bold py-2 rounded-xl transition">Dato Curioso 🔍</button>
+                <div id="fact-venus" class="hidden-fact mt-3 text-sm bg-orange-950 p-3 rounded-lg text-orange-200">
+                    Venus gira al revés que la mayoría de los planetas. ¡El sol sale por el oeste!
+                </div>
+            </div>
+
+            <!-- Tierra -->
+            <div class="bg-blue-900/50 rounded-3xl p-6 border-2 border-blue-400 planet-card shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                <div class="text-7xl text-center mb-4 float-animation">🌍</div>
+                <h3 class="text-3xl font-black text-center text-blue-300 mb-2">La Tierra</h3>
+                <p class="text-blue-100 mb-4 text-center">¡Nuestro hermoso hogar! Es el único planeta que sabemos que tiene vida, agua y plantas.</p>
+                <button onclick="toggleFact('fact-tierra')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 rounded-xl transition">Dato Curioso 🔍</button>
+                <div id="fact-tierra" class="hidden-fact mt-3 text-sm bg-blue-950 p-3 rounded-lg text-blue-200">
+                    La Tierra no es una esfera perfecta, está un poquito aplastada en los polos.
+                </div>
+            </div>
+
+            <!-- Marte -->
+            <div class="bg-red-900/40 rounded-3xl p-6 border-2 border-red-500/50 planet-card">
+                <div class="text-7xl text-center mb-4">🔴</div>
+                <h3 class="text-3xl font-black text-center text-red-400 mb-2">Marte</h3>
+                <p class="text-red-100 mb-4 text-center">Lo llaman el "Planeta Rojo" por el color de su arena y rocas. Tenemos robots explorándolo.</p>
+                <button onclick="toggleFact('fact-marte')" class="w-full bg-red-700 hover:bg-red-600 text-white font-bold py-2 rounded-xl transition">Dato Curioso 🔍</button>
+                <div id="fact-marte" class="hidden-fact mt-3 text-sm bg-red-950 p-3 rounded-lg text-red-200">
+                    En Marte está el volcán más grande de todo el sistema solar: ¡El Monte Olimpo!
+                </div>
+            </div>
+
+            <!-- Júpiter -->
+            <div class="bg-amber-900/40 rounded-3xl p-6 border-2 border-amber-600/50 planet-card">
+                <div class="text-7xl text-center mb-4">🌩️</div>
+                <h3 class="text-3xl font-black text-center text-amber-400 mb-2">Júpiter</h3>
+                <p class="text-amber-100 mb-4 text-center">¡Es un gigante! Es el planeta más grande y está hecho casi totalmente de gas.</p>
+                <button onclick="toggleFact('fact-jupiter')" class="w-full bg-amber-700 hover:bg-amber-600 text-white font-bold py-2 rounded-xl transition">Dato Curioso 🔍</button>
+                <div id="fact-jupiter" class="hidden-fact mt-3 text-sm bg-amber-950 p-3 rounded-lg text-amber-200">
+                    Tiene una tormenta gigante llamada la "Gran Mancha Roja" que lleva girando cientos de años.
+                </div>
+            </div>
+
+            <!-- Saturno -->
+            <div class="bg-yellow-900/40 rounded-3xl p-6 border-2 border-yellow-500/50 planet-card">
+                <div class="text-7xl text-center mb-4">🪐</div>
+                <h3 class="text-3xl font-black text-center text-yellow-400 mb-2">Saturno</h3>
+                <p class="text-yellow-100 mb-4 text-center">El planeta de los anillos hermosos. Sus anillos están hechos de pedacitos de hielo y roca.</p>
+                <button onclick="toggleFact('fact-saturno')" class="w-full bg-yellow-700 hover:bg-yellow-600 text-white font-bold py-2 rounded-xl transition">Dato Curioso 🔍</button>
+                <div id="fact-saturno" class="hidden-fact mt-3 text-sm bg-yellow-950 p-3 rounded-lg text-yellow-200">
+                    Saturno es tan ligero que, si existiera una piscina gigante de agua, ¡podría flotar como una pelota!
+                </div>
+            </div>
+
+            <!-- Urano -->
+            <div class="bg-cyan-900/40 rounded-3xl p-6 border-2 border-cyan-400/50 planet-card">
+                <div class="text-7xl text-center mb-4">🧊</div>
+                <h3 class="text-3xl font-black text-center text-cyan-300 mb-2">Urano</h3>
+                <p class="text-cyan-100 mb-4 text-center">Es un planeta muy frío y azul. Lo curioso es que ¡gira de lado como un barril rodando!</p>
+                <button onclick="toggleFact('fact-urano')" class="w-full bg-cyan-700 hover:bg-cyan-600 text-white font-bold py-2 rounded-xl transition">Dato Curioso 🔍</button>
+                <div id="fact-urano" class="hidden-fact mt-3 text-sm bg-cyan-950 p-3 rounded-lg text-cyan-200">
+                    También tiene anillos, pero son oscuros y muy difíciles de ver.
+                </div>
+            </div>
+
+            <!-- Neptuno -->
+            <div class="bg-indigo-900/60 rounded-3xl p-6 border-2 border-indigo-400/50 planet-card">
+                <div class="text-7xl text-center mb-4">🌀</div>
+                <h3 class="text-3xl font-black text-center text-indigo-300 mb-2">Neptuno</h3>
+                <p class="text-indigo-100 mb-4 text-center">Es el último planeta. Es de color azul oscuro y tiene los vientos más fuertes de todos.</p>
+                <button onclick="toggleFact('fact-neptuno')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-xl transition">Dato Curioso 🔍</button>
+                <div id="fact-neptuno" class="hidden-fact mt-3 text-sm bg-indigo-950 p-3 rounded-lg text-indigo-200">
+                    ¡Hace tanto frío en Neptuno que podrías convertirte en un cubito de hielo al instante!
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Sección de Juego / Trivia -->
+    <section id="juego" class="py-16 px-4 bg-gradient-to-b from-transparent to-indigo-950 border-t border-indigo-500/20">
+        <div class="max-w-3xl mx-auto bg-indigo-900/60 backdrop-blur-sm rounded-3xl p-8 border border-indigo-400/30 text-center">
+            <h2 class="text-4xl font-black mb-6 text-yellow-300">🎮 Minijuego Espacial 🎮</h2>
+            <p class="text-xl mb-8">¿Qué tanto aprendiste? Responde esta pregunta:</p>
+            
+            <div id="trivia-container">
+                <p class="text-2xl font-bold mb-6 text-white" id="question-text">¿Cuál es el planeta conocido como el "Planeta Rojo"?</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <button onclick="checkAnswer(false, this)" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-6 rounded-2xl text-xl transition transform hover:scale-105">La Tierra</button>
+                    <button onclick="checkAnswer(true, this)" class="bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-6 rounded-2xl text-xl transition transform hover:scale-105">Marte</button>
+                    <button onclick="checkAnswer(false, this)" class="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-4 px-6 rounded-2xl text-xl transition transform hover:scale-105">Venus</button>
+                </div>
+                <div id="trivia-result" class="text-2xl font-black hidden mt-6 rounded-xl p-4"></div>
+            </div>
+            
+            <button id="next-btn" onclick="nextQuestion()" class="hidden mx-auto mt-6 bg-green-500 hover:bg-green-400 text-white font-bold py-3 px-8 rounded-full transition">Siguiente Pregunta ➡️</button>
+        </div>
+    </section>
+
+    <!-- Footer Sin Fines de Lucro -->
+    <footer class="bg-black py-8 border-t border-gray-800 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="text-4xl mb-4">🌟📚🔭</div>
+            <h3 class="text-xl font-bold text-gray-300 mb-2">Proyecto Educativo Abierto</h3>
+            <p class="text-gray-500 text-sm max-w-2xl mx-auto mb-4">
+                Esta es una plataforma creada exclusivamente con fines educativos, sin fines de lucro, diseñada para fomentar la curiosidad científica en los niños. Todas las ilustraciones son representaciones lúdicas.
+            </p>
+            <p class="text-gray-600 text-xs">
+                &copy; 2023 AstroNiños. Creado con ❤️ para pequeños exploradores.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Función para mostrar/ocultar los datos curiosos
+        function toggleFact(factId) {
+            const element = document.getElementById(factId);
+            if (element.style.display === "block") {
+                element.style.display = "none";
+            } else {
+                element.style.display = "block";
+                // Animación simple de aparición
+                element.style.opacity = 0;
+                let opacity = 0;
+                const interval = setInterval(function() {
+                    if (opacity < 1) {
+                        opacity += 0.1;
+                        element.style.opacity = opacity;
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 20);
+            }
+        }
+
+        // Lógica de la Trivia
+        const questions = [
+            {
+                q: "¿Cuál es el planeta conocido como el 'Planeta Rojo'?",
+                options: [
+                    { text: "La Tierra", correct: false, color: "blue" },
+                    { text: "Marte", correct: true, color: "red" },
+                    { text: "Venus", correct: false, color: "yellow" }
+                ]
+            },
+            {
+                q: "¿Qué planeta tiene los anillos más famosos y grandes?",
+                options: [
+                    { text: "Saturno", correct: true, color: "yellow" },
+                    { text: "Mercurio", correct: false, color: "gray" },
+                    { text: "Neptuno", correct: false, color: "indigo" }
+                ]
+            },
+            {
+                q: "¿El Sol es un planeta o una estrella?",
+                options: [
+                    { text: "Un Planeta", correct: false, color: "green" },
+                    { text: "Una Estrella", correct: true, color: "orange" },
+                    { text: "Una Luna", correct: false, color: "gray" }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question-text').innerText = q.q;
+            
+            const container = document.querySelector('.grid.grid-cols-1.sm\\:grid-cols-3');
+            container.innerHTML = '';
+            
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = `bg-${opt.color}-600 hover:bg-${opt.color}-500 text-white font-bold py-4 px-6 rounded-2xl text-xl transition transform hover:scale-105`;
+                btn.innerText = opt.text;
+                btn.onclick = () => checkAnswer(opt.correct, btn);
+                container.appendChild(btn);
+            });
+
+            document.getElementById('trivia-result').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+        }
+
+        function checkAnswer(isCorrect, buttonElement) {
+            const resultDiv = document.getElementById('trivia-result');
+            resultDiv.classList.remove('hidden');
+            
+            // Deshabilitar botones temporales
+            const buttons = buttonElement.parentElement.children;
+            for(let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
+            if (isCorrect) {
+                resultDiv.innerHTML = "¡CORRECTO! 🥳 Estrellita para ti ⭐";
+                resultDiv.className = "text-2xl font-black mt-6 rounded-xl p-4 bg-green-500/20 text-green-300 border-2 border-green-400";
+                buttonElement.classList.remove('opacity-50');
+                buttonElement.classList.add('ring-4', 'ring-green-400', 'ring-offset-2', 'ring-offset-indigo-900');
+            } else {
+                resultDiv.innerHTML = "¡Uy, casi! Sigue intentándolo 🚀";
+                resultDiv.className = "text-2xl font-black mt-6 rounded-xl p-4 bg-red-500/20 text-red-300 border-2 border-red-400";
+            }
+
+            // Mostrar botón de siguiente pregunta si hay más
+            if (currentQuestion < questions.length - 1) {
+                document.getElementById('next-btn').classList.remove('hidden');
+            } else {
+                setTimeout(() => {
+                    resultDiv.innerHTML = "¡Completaste la trivia, Gran Explorador! 🏆";
+                    resultDiv.className = "text-2xl font-black mt-6 rounded-xl p-4 bg-yellow-500/20 text-yellow-300 border-2 border-yellow-400 animate-pulse";
+                    currentQuestion = -1; // Reset
+                    document.getElementById('next-btn').innerText = "Jugar de nuevo 🔄";
+                    document.getElementById('next-btn').classList.remove('hidden');
+                }, 1500);
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            loadQuestion();
+            if (currentQuestion === 0) {
+                document.getElementById('next-btn').innerText = "Siguiente Pregunta ➡️";
+            }
+        }
+
+        // Inicializar la primera pregunta
+        loadQuestion();
+
+    </script>
+</body>
+</html>
